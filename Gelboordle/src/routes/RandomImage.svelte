@@ -1,19 +1,50 @@
 <script lang="ts">
 
     let currentResponse: any;
+    let imageUrl: any;
+
+    const fethRandomImg = async () => {
+       
+        const response = await fetch("/api/randomimage", {method: 'GET'});
+
+        console.log("the response", response)
+
+        const data = await response.json();
+
+        console.log("look at all this data",data);
+
+        currentResponse = data;
+        imageUrl = data.post[0].file_url
+        console.log(imageUrl);
+    }
+
+
+    
 
 </script>
 
 <div>
     <p>{{ currentResponse }}</p>
-    <button class="button" on:click= { 
-        async () => {
-          fetch("/api/randomimage", {method: 'GET'}).then(r => console.log(r))
-        }
-      }>
+    <button class="button" on:click={fethRandomImg}>
         new image
     </button>
+   
+      <img src="{imageUrl}" alt="">
+ 
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <style>
@@ -89,5 +120,7 @@ button:active {
   -moz-transition: box-shadow 0.2s ease-in;
   transition: box-shadow 0.2s ease-in;
 }
+
+
 
 </style>
